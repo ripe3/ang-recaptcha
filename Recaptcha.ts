@@ -1,7 +1,4 @@
-import { Directive, AfterViewInit, ElementRef, Input } from '@angular/core';
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
+import { Directive, AfterViewInit, ElementRef } from '@angular/core';
 
 declare var grecaptcha;
 
