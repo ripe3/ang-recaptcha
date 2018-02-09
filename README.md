@@ -1,5 +1,5 @@
-# ang-recaptcha
-Google Recaptcha implementation for Angular 2+
+# easy-gcaptcha
+Easy Google Recaptcha implementation for Angular 2+
 
 ## Usage
 
