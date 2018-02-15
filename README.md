@@ -20,7 +20,7 @@ Easy Google Recaptcha implementation for Angular 2+
       ...
     ]
     
-- Add the `recaptcha` attribute to a `<div>`
+- Add the `recaptcha` attribute to a `<div>` where you want to show the Recaptcha box
 
 <b></b>
 
