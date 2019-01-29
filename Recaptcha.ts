@@ -23,8 +23,9 @@ export class Recaptcha implements AfterViewInit {
         let node = document.createElement('script');
         node.src = url;
         node.type = 'text/javascript';
-        node.async = true;
         node.charset = 'utf-8';
+        node.async = true;
+        node.defer = false;
         document.getElementsByTagName('head')[0].appendChild(node);
     }
 
@@ -40,8 +41,17 @@ export class Recaptcha implements AfterViewInit {
 
         // wait a bit to avoid a race condition
         // the element must be rendered before firing Recaptcha
-        setTimeout(function () {
+
+        let fun = function () {
+            if(typeof grecaptcha === "undefined" || typeof grecaptcha.render !== "function") {
+                setTimeout(fun, 1000);
+                return;
+            }
+
+            console.log(typeof grecaptcha === "undefined");
             grecaptcha.render('recaptcha', { 'sitekey': sitekey })
-        }, 1000);
+        };
+
+        setTimeout(fun, 1000);
     }
 }
