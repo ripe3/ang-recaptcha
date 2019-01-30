@@ -7,39 +7,53 @@ Easy Google Recaptcha implementation for Angular 2+
 
 - Import the `Recaptcha` class in your `app.module.ts`
 
- <b></b>
-
-    import { Recaptcha } from './Recaptcha';
+```Typescript
+import { Recaptcha } from './Recaptcha';
+    ...    
+@NgModule({
+  declarations: [
+  ...
+  Recaptcha,
+  ...
+]
+```
     
-    ...
-    
-    @NgModule({
-      declarations: [
-      ...
-      Recaptcha,
-      ...
-    ]
-    
-- Add the `recaptcha` attribute to a `<div>` where you want to show the Recaptcha box
+- Add the `recaptcha` attribute to a `<div>` where you want to show the Recaptcha box alongside its parameters
 
-<b></b>
-
-    <div recaptcha sitekey="YOUR_SITE_KEY"></div>
+```HTML
+<div recaptcha data-key="YOUR_SITE_KEY" data-position="POSITION" data-type="TYPE"></div>
+```
+    
+- YOUR_SITE_KEY: Key provided on reCaptcha's admin panel.
+- POSITION: Where reCaptcha should be placed. Accepts: `bottomright` (default), `bottomleft` or `inline` (can be managed with css). Only works for `invisible` and `v3`.
+- TYPE: Type of your reCaptcha. Accepts: `v2` (default), `v3` and `invisible`.
     
 
 ## Getting result inside your module
 
-- Add before `@Component`
+- Import `Recaptcha`
 
-<b></b>
+- Add this snipet before your constructor but inside the main class
 
-    declare var grecaptcha:any;
+```Typescript
+@ViewChild(Recaptcha) recaptcha;
+```
     
-- To get the result
+- Getting result with `v2` and `invisible`
 
-<b></b>
+```Typescript
+recaptcha.getResponse(function(token){ 
+   ... 
+});
+```
+    
+- Getting result with `v3` (see https://developers.google.com/recaptcha/docs/v3#actions to what this `action` parameters is)
 
-    let result = grecaptcha.getResponse();
+```Typescript
+recaptcha.getResponse(action, function(token){ 
+  ... 
+});
+```
     
 <b>Done!</b>
     
