@@ -31,7 +31,11 @@ import { Recaptcha } from './Recaptcha';
 
 ## Getting result inside your module
 
-- Import `Recaptcha`
+- Import `Recaptcha` class in your module
+
+```Typescript
+import { Recaptcha } from './Recaptcha';
+```
 
 - Add this snipet before your constructor but inside the main class
 
@@ -47,7 +51,7 @@ recaptcha.getResponse(function(token){
 });
 ```
     
-- Getting result with `v3` (see https://developers.google.com/recaptcha/docs/v3#actions to what this `action` parameters is)
+- Getting result with `v3` (see https://developers.google.com/recaptcha/docs/v3#actions)
 
 ```Typescript
 recaptcha.getResponse(action, function(token){ 
@@ -56,4 +60,3 @@ recaptcha.getResponse(action, function(token){
 ```
     
 <b>Done!</b>
-    
