@@ -1,4 +1,4 @@
-import { Directive, AfterViewInit, ElementRef } from '@angular/core';
+import { Directive, AfterViewInit, ElementRef} from '@angular/core';
 
 declare var grecaptcha;
 
@@ -8,17 +8,17 @@ export class Recaptcha implements AfterViewInit {
 
     constructor(private el: ElementRef) { }
 
-    public loadScript(url: string) {
+    type: any;
+    key: any;
+    position: any;
+    clID: any;
 
-        // https://stackoverflow.com/a/9659297
-        
+    public loadScript(url: string) {
         var scripts = document.getElementsByTagName('script');
         for (var i = scripts.length; i--;) {
             if (scripts[i].src == url)
                 return;
         }
-
-        // https://stackoverflow.com/a/38473334
 
         let node = document.createElement('script');
         node.src = url;
@@ -31,27 +31,58 @@ export class Recaptcha implements AfterViewInit {
 
     ngAfterViewInit() {
 
-        //add script
+        this.type = this.el.nativeElement.getAttribute("data-type");
+        this.key = this.el.nativeElement.getAttribute("data-key");
+        this.position = this.el.nativeElement.getAttribute("data-position");
+
         this.loadScript("https://www.google.com/recaptcha/api.js?render=explicit");
 
-        // set id and get the key
         this.el.nativeElement.id = "recaptcha";
         this.el.nativeElement.style.height = "74px";
-        let sitekey = this.el.nativeElement.getAttribute("sitekey");
 
-        // wait a bit to avoid a race condition
-        // the element must be rendered before firing Recaptcha
+        let t = this;
 
         let fun = function () {
-            if(typeof grecaptcha === "undefined" || typeof grecaptcha.render !== "function") {
+            if (typeof grecaptcha !== "object" || typeof grecaptcha.render !== "function" || typeof grecaptcha.execute !== "function") {
                 setTimeout(fun, 1000);
                 return;
             }
 
-            console.log(typeof grecaptcha === "undefined");
-            grecaptcha.render('recaptcha', { 'sitekey': sitekey })
+            if (t.type == "v2" || !t.type)
+                grecaptcha.render('recaptcha', { 'sitekey': t.key })
+
+            if (t.type == "invisible")
+                grecaptcha.render('recaptcha', { 'sitekey': t.key, 'size': 'invisible', 'badge': t.position, 'callback': 'grec_call' })
+
+            if (t.type == "v3")
+                t.clID = grecaptcha.render('recaptcha', { 'sitekey': t.key, 'size': 'invisible',  'badge': t.position });
+
         };
 
         setTimeout(fun, 1000);
+
     }
+
+    getResponseV3(action, callback) {
+        grecaptcha.execute(this.clID, { action: action }).then(function (token) {
+            callback.call(undefined, token);
+        });
+    }
+
+    getResponse(callback) {
+        if (this.type == "invisible") {
+            window["grec_call"] = function (token) {
+                callback.call(undefined, token);
+            }
+            grecaptcha.execute();
+        } else {
+            callback.call(undefined, grecaptcha.getResponse());
+        }
+
+    }
+
+    reset() {
+        grecaptcha.reset();
+    }
+
 }
