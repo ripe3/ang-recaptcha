@@ -24,9 +24,9 @@ import { Recaptcha } from './Recaptcha';
 <div recaptcha data-key="YOUR_SITE_KEY" data-position="POSITION" data-type="TYPE"></div>
 ```
     
-- YOUR_SITE_KEY: Key provided on reCaptcha's admin panel.
-- POSITION: Where reCaptcha should be placed. Accepts: `bottomright` (default), `bottomleft` or `inline` (can be managed with css). Only works for `invisible` and `v3`.
-- TYPE: Type of your reCaptcha. Accepts: `v2` (default), `v3` and `invisible`.
+- **YOUR_SITE_KEY**: Key provided on reCaptcha's admin panel.
+- **POSITION**: Where reCaptcha should be placed. Accepts: `bottomright` (default), `bottomleft` or `inline` (can be managed with css). Only works for `invisible` and `v3`.
+- **TYPE**: Type of your reCaptcha. Accepts: `v2` (default), `v3` and `invisible`.
     
 
 ## Getting result inside your module
