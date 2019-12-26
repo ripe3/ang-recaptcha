@@ -39,15 +39,14 @@ import { Recaptcha } from './Recaptcha';
 
 - Add this snipet before your constructor but inside the main class
 
-  - **Angular up to 7**
-
 ```Typescript
+
+// Angular up to 7
+
 @ViewChild(Recaptcha) recaptcha;
-```
 
-  - **Angular 8**, the way to declare `ViewChild` has changed.
+// Angular 8+
 
-```Typescript
 @ViewChild(Recaptcha, {static: false}) recaptcha;
 ```
     
