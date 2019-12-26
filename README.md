@@ -1,5 +1,5 @@
 # easy-gcaptcha
-Easy Google Recaptcha implementation for Angular 2+
+Easy Google Recaptcha implementation for Angular
 
 ## Usage
 
@@ -39,8 +39,16 @@ import { Recaptcha } from './Recaptcha';
 
 - Add this snipet before your constructor but inside the main class
 
+- **Angular up to 7**
+
 ```Typescript
 @ViewChild(Recaptcha) recaptcha;
+```
+
+- **Angular 8**, the way to declare `ViewChild` has changed.
+
+```Typescript
+@ViewChild(Recaptcha, {static: false}) recaptcha;
 ```
     
 - Getting result with `v2` and `invisible`
@@ -59,4 +67,4 @@ recaptcha.getResponse(action, function(token){
 });
 ```
     
-<b>Done!</b>
+**Done!**
